@@ -27,7 +27,7 @@ btnPrikazi.addEventListener('click', function (e) {
 
 function currentWeather(city) {
   fetch(
-    `http://api.weatherapi.com/v1/current.json?key=bc0b0bc6a6694e50b0a93928230806&q=${city}&aqi=no&lang=sr`
+    `https://api.weatherapi.com/v1/current.json?key=bc0b0bc6a6694e50b0a93928230806&q=${city}&aqi=no&lang=sr`
   )
     .then(res => res.json())
     .then(data => {
@@ -71,7 +71,7 @@ const prognozaContainer = document.getElementById('prognoza-container');
 
 function forecastWeather(city, days) {
   fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=bc0b0bc6a6694e50b0a93928230806&q=${city}&days=${days}&aqi=no&alerts=yes&lang=sr`
+    `https://api.weatherapi.com/v1/forecast.json?key=bc0b0bc6a6694e50b0a93928230806&q=${city}&days=${days}&aqi=no&alerts=yes&lang=sr`
   )
     .then(res => res.json())
     .then(data => {
