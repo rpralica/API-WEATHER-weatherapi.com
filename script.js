@@ -71,7 +71,7 @@ const prognozaContainer = document.getElementById('prognoza-container');
 
 function forecastWeather(city, days) {
   fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=bc0b0bc6a6694e50b0a93928230806&q=${city}&days=${days}&aqi=no&alerts=yes&lang=en`
+    `http://api.weatherapi.com/v1/forecast.json?key=bc0b0bc6a6694e50b0a93928230806&q=${city}&days=${days}&aqi=no&alerts=yes&lang=sr`
   )
     .then(res => res.json())
     .then(data => {
