@@ -41,7 +41,7 @@ function renderTrenutno(data) {
   const nema = data.alerts?.alert[0]?.desc;
   const result = nema ?? ' Za danas nema upozorenja';
   const el = `
-<div class="col-4">
+<div class="col-3">
 <br><br>
 <img src="/Assets/${code}.png" alt="">
 <br><br>
