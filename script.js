@@ -3,7 +3,7 @@ const result = 'Nema Opisa za navedeni grad';
 const inpGrad = document.getElementById('grad');
 const btnPrikazi = document.getElementById('prikazi');
 const trenutnoContainer = document.getElementById('trenutno-container');
-
+const cords=[] 
 btnPrikazi.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -27,7 +27,7 @@ btnPrikazi.addEventListener('click', function (e) {
 
 function currentWeather(city) {
   fetch(
-    `https://api.weatherapi.com/v1/current.json?key=bc0b0bc6a6694e50b0a93928230806&q=${city}&aqi=no&lang=sr`
+    `https://api.weatherapi.com/v1/current.json?key=293d337328c946e5a86153625231306&q=${city}&aqi=no&lang=sr`
   )
     .then(res => res.json())
     .then(data => {
@@ -61,7 +61,7 @@ function renderTrenutno(data) {
 `;
   trenutnoContainer.insertAdjacentHTML('beforeend', el);
 }
-currentWeather('Banja Luka');
+//currentWeather('Banja Luka');
 
 //Prognoza
 const optDani = document.getElementById('optDani');
@@ -71,7 +71,7 @@ const prognozaContainer = document.getElementById('prognoza-container');
 
 function forecastWeather(city, days) {
   fetch(
-    `https://api.weatherapi.com/v1/forecast.json?key=bc0b0bc6a6694e50b0a93928230806&q=${city}&days=${days}&aqi=no&alerts=yes&lang=sr`
+    `https://api.weatherapi.com/v1/forecast.json?key=293d337328c946e5a86153625231306&q=${city}&days=${days}&aqi=no&alerts=yes&lang=sr`
   )
     .then(res => res.json())
     .then(data => {
@@ -155,20 +155,10 @@ function renderPrognoza(data) {
   });
 }
 
-forecastWeather('Banja Luka', 5);
+//forecastWeather('Banja Luka', 5);
 //
-/* 
-      const nema = data.alerts.alert[0]?.desc;
-      const result = nema ?? 'Nema Opisa za navedeni grad';
-      console.log(data);
-      console.log(data.forecast.forecastday[0].astro.sunrise);
-      console.log(data.forecast.forecastday[0].astro.sunset);
-      console.log(data.forecast.forecastday[0].hour[0].temp_c + ' C');
-      console.log(data.forecast.forecastday[0].hour[0].condition.text);
-      console.log(data.forecast.forecastday[0].hour[0].condition.icon);
-      console.log(data.forecast.forecastday[0].hour[0].condition.code);
-      console.log(nema);
-      document.getElementById('test').value = result; */
+
+     
 
 const a = 'Nema Opisa za navedeni grad';
 
@@ -183,12 +173,87 @@ function optionDani() {
 
 optionDani();
 
-function ikone() {
-  fetch('/weather_conditions.json')
+
+
+
+
+  //currentWeather(possss)
+/*
+44.7618057
+17.1795281
+
+*/
+
+ 
+
+let suggestions = [];
+async function fetchData() {
+ 
+ await fetch(`/world-cities.json`)
     .then(res => res.json())
     .then(data => {
-      console.log(data);
+      suggestions.push(...data);
     });
 }
+fetchData()
+// Retrieve the input and results elements
+const input = document.getElementById('autocomplete-input');
+const resultsContainer = document.getElementById('autocomplete-results');
 
-ikone();
+// Event listener for input changes
+inpGrad.addEventListener('input', function () {
+  const inputValue = this.value.toLowerCase();
+  const filteredSuggestions = suggestions.filter(function (suggestion) {
+    return suggestion.name.toLowerCase().startsWith(inputValue);
+  });
+
+  // Clear previous results
+  resultsContainer.innerHTML = '';
+
+  // Display filtered suggestions
+  filteredSuggestions.forEach(function (suggestion) {
+    const item = document.createElement('div');
+    item.textContent = suggestion.name;
+    item.classList.add('autocomplete-item');
+    item.addEventListener('click', function () {
+      inpGrad.value = suggestion.name;
+      resultsContainer.innerHTML = '';
+    });
+    resultsContainer.appendChild(item);
+  });
+});
+
+
+
+//Current position
+
+  
+const options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0,
+};
+
+function success(pos) {
+  const crd = pos.coords;
+
+  console.log("Your current position is:");
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+  const cordsa=[crd.latitude,crd.longitude]
+  
+  currentWeather([cordsa[0],cordsa[1]])
+}
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+
+
+
+
+
+
