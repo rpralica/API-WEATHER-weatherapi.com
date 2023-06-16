@@ -31,7 +31,7 @@ function currentWeather(city) {
   )
     .then(res => res.json())
     .then(data => {
-      console.log(data)
+      //console.log(data)
       renderTrenutno(data);
     });
 }
@@ -154,12 +154,7 @@ function renderPrognoza(data) {
     
   });
 }
-
-//forecastWeather('Banja Luka', 5);
-//
-
-     
-
+//Auto populate option number of days 
 const a = 'Nema Opisa za navedeni grad';
 
 function optionDani() {
@@ -174,17 +169,7 @@ function optionDani() {
 optionDani();
 
 
-
-
-
-  //currentWeather(possss)
-/*
-44.7618057
-17.1795281
-
-*/
-
- 
+//Search sugestions 
 
 let suggestions = [];
 async function fetchData() {
@@ -237,10 +222,7 @@ const options = {
 function success(pos) {
   const crd = pos.coords;
 
-  console.log("Your current position is:");
-  console.log(`Latitude : ${crd.latitude}`);
-  console.log(`Longitude: ${crd.longitude}`);
-  console.log(`More or less ${crd.accuracy} meters.`);
+  
   const cordsa=[crd.latitude,crd.longitude]
   
   currentWeather([cordsa[0],cordsa[1]])
@@ -254,6 +236,47 @@ navigator.geolocation.getCurrentPosition(success, error, options);
 
 
 
+//Autosearch 
 
+
+// // Get references to the necessary elements
+// const searchInput = document.getElementById('grad');
+// const searchButton = document.getElementById('prikazi');
+// const searchResults = document.getElementById('autocomplete-results');
+
+// // Register an event listener for the search button
+// searchInput.addEventListener('input', performSearch);
+
+// // Function to handle the search
+// function performSearch() {
+//   const location = inpGrad.value;
+
+//   // Clear previous search results
+//   searchResults.innerHTML = '';
+
+//   // Make a request to the WeatherAPI.com auto search endpoint
+//   fetch(`https://api.weatherapi.com/v1/search.json?key=293d337328c946e5a86153625231306&q=${location}`)
+//     .then(response => response.json())
+//     .then(data => {
+//       // Process the response data
+//       if (data.length > 0) {
+//         // Display search results
+//         data.forEach(result => {
+//           const resultItem = document.createElement('div');
+//           resultItem.textContent = result.name;
+//           searchResults.appendChild(resultItem);
+//         });
+//       } else {
+//         // No results found
+//         const noResults = document.createElement('div');
+//         noResults.textContent = 'No results found.';
+//         searchResults.appendChild(noResults);
+//       }
+//     })
+//     .catch(error => {
+//       // Handle error
+//       console.error('Error:', error);
+//     });
+// }
 
 
