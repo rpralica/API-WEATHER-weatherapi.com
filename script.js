@@ -3,7 +3,7 @@ const result = 'Nema Opisa za navedeni grad';
 const inpGrad = document.getElementById('grad');
 const btnPrikazi = document.getElementById('prikazi');
 const trenutnoContainer = document.getElementById('trenutno-container');
-const cords=[] 
+const cords = [];
 btnPrikazi.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -84,13 +84,29 @@ function forecastWeather(city, days) {
 function renderPrognoza(data) {
   data.forecast.forecastday.forEach((el, i) => {
     const code = data.forecast.forecastday[i].day.condition.code;
-    
-      let datum = new Date(data.forecast.forecastday[i].date);
+    function imeDana(day) {
+      const dan = [
+        'Nedelja',
+        'Ponedeljak',
+        'Utorak',
+        'Srijeda',
+        'Četvrtak',
+        'Petak',
+        'Subota',
+        
+      ];
 
-      el = `
-    <div class="row  border border-light border-top-5 trenutni-css rounded">
+      let dayName = dan[day ];
+      return dayName;
+    }
+    let datum = new Date(data.forecast.forecastday[i].date);
+
+    el = `
+    <div class="row shadow-lg p-3 mb-5 bg-body  border border-light border-top-5 trenutni-css rounded">
     <br><br>
-    <h1 class="mt-5" style="text-align:center">${datum.toLocaleDateString('sr-SR')}</h1>
+    <h1 class="fw-bold text-light nasl" class="mt-5" style="text-align:center"><span class="text-info">${imeDana(
+      new Date(data.forecast.forecastday[i].date).getDay()
+    )}</span>  ${datum.toLocaleDateString('sr-SR')}</h1>
   
     <div class="col-4 ">
     <br><br>
@@ -98,7 +114,7 @@ function renderPrognoza(data) {
 </div>
 <div class="col-8">
 
-<table id="table" class="table table-striped" style="font-size: larger;">
+<table id="table" class="table " style="font-size: larger;">
 <thead>
 
 
@@ -106,55 +122,120 @@ function renderPrognoza(data) {
 <tbody id="tBody">
 
 <tr>
-<td class="td-bold" strong>Prognoza</td>
-<td>${data.forecast.forecastday[i].day.condition.text}</td>
+<td  strong>Prognoza</td>
+<td class="text-primary">${data.forecast.forecastday[i].day.condition.text}</td>
 </tr>
 
    <tr>
-<td class="td-bold">Temperatura</td>
-<td>${data.forecast.forecastday[i].day.avgtemp_c} °C</td>
+<td >Temperatura</td>
+<td class="text-primary" >${data.forecast.forecastday[i].day.avgtemp_c} °C</td>
 </tr>
 
 <tr>
-<td class="td-bold">Vjerovatnoća kiše</td>
-<td>${data.forecast.forecastday[i].day.daily_chance_of_rain} %</td>
+<td >Vjerovatnoća kiše</td>
+<td class="text-primary">${data.forecast.forecastday[i].day.daily_chance_of_rain} %</td>
 </tr>
 <tr>
-<td class="td-bold">Vjerovatnoća snijega</td>
-<td>${data.forecast.forecastday[i].day.daily_chance_of_snow} %</td>
+<td >Vjerovatnoća snijega</td>
+<td class="text-primary">${data.forecast.forecastday[i].day.daily_chance_of_snow} %</td>
 </tr>
 
 
     
 <tr>
-<td class="td-bold">Izlazak sunca</td>
-<td>${data.forecast.forecastday[i].astro.sunrise}</td>
+<td >Izlazak sunca</td>
+<td class="text-primary">${data.forecast.forecastday[i].astro.sunrise}</td>
 </tr>
 <tr>
-<td class="td-bold">Zalazak sunca</td>
-<td>${data.forecast.forecastday[i].astro.sunset}</td>
+<td >Zalazak sunca</td>
+<td class="text-primary">${data.forecast.forecastday[i].astro.sunset}</td>
 </tr>
 <tr>
-<td class="td-bold">UV index</td>
-<td>${data.forecast.forecastday[i].day.uv}</td>
+<td >UV index</td>
+<td class="text-primary">${data.forecast.forecastday[i].day.uv}</td>
 </tr>
 <br><br><br>
-
 </tbody>
 </table>
 <br><br><br>
+
 </div>
+<br>
+
+
+
+
+</div>
+
 <br>
 </div>
 
+<div class="container collapse"id="collapseExample" >
+<div class="row  ">
+<div class="col-2 card shadow-lg p-3 mb-5 bg-light   border border-5 border-info">
+<label class=" form-control bg-warning fw-bold text-center">04:00</label>
+<img src="${data.forecast.forecastday[i].hour[3].condition.icon}" alt="">
+<h5 class="text-danger"><span class="text-info">Prognoza:</span> ${data.forecast.forecastday[i].hour[3].condition.text}</h5>
+<h5 class="text-danger"><span class="text-info">Temperat.:</span> ${data.forecast.forecastday[i].hour[3].temp_c} °C</h5>
+<h5 class="text-danger"><span class="text-info">Kiša: </span>${data.forecast.forecastday[i].hour[3].chance_of_rain} %</h5>
+<h5 class="text-danger"><span class="text-info">Snijeg:</span> ${data.forecast.forecastday[i].hour[3].chance_of_snow} %</h5>
+</div>
+ 
+<div class="col-2  card shadow-lg p-3 mb-5 bg-light   border border-5 border-info">
+<label class=" form-control bg-warning fw-bold text-center">07:00</label>
+<img src="${data.forecast.forecastday[i].hour[6].condition.icon}" alt="">
+<h5 class="text-danger"><span class="text-info">Prognoza:</span> ${data.forecast.forecastday[i].hour[6].condition.text}</h5>
+<h5 class="text-danger"><span class="text-info">Temperat.:</span> ${data.forecast.forecastday[i].hour[6].temp_c} °C</h5>
+<h5 class="text-danger"><span class="text-info">Kiša: </span>${data.forecast.forecastday[i].hour[6].chance_of_rain} %</h5>
+<h5 class="text-danger"><span class="text-info">Snijeg:</span> ${data.forecast.forecastday[i].hour[6].chance_of_snow} %</h5>
 
+</div>
+
+<div class="col-2 shadow-lg p-3 mb-5 bg-light border border-5 border-info  card">
+<label class=" form-control bg-warning fw-bold text-center">11:00</label>
+<img src="${data.forecast.forecastday[i].hour[10].condition.icon}" alt="">
+<h5 class="text-danger"><span class="text-info">Prognoza:</span> ${data.forecast.forecastday[i].hour[10].condition.text}</h5>
+<h5 class="text-danger"><span class="text-info">Temperat.:</span> ${data.forecast.forecastday[i].hour[10].temp_c} °C</h5>
+<h5 class="text-danger"><span class="text-info">Kiša: </span>${data.forecast.forecastday[i].hour[10].chance_of_rain} %</h5>
+<h5 class="text-danger"><span class="text-info">Snijeg:</span> ${data.forecast.forecastday[i].hour[10].chance_of_snow} %</h5>
+</div>
+
+<div class="col-2 shadow-lg p-3 mb-5 bg-light border border-5 border-info  card">
+<label class=" form-control bg-warning fw-bold text-center">15:00</label>
+<img src="${data.forecast.forecastday[i].hour[14].condition.icon}" alt="">
+<h5 class="text-danger"><span class="text-info">Prognoza:</span> ${data.forecast.forecastday[i].hour[14].condition.text}</h5>
+<h5 class="text-danger"><span class="text-info">Temperat.:</span> ${data.forecast.forecastday[i].hour[14].temp_c} °C</h5>
+<h5 class="text-danger"><span class="text-info">Kiša: </span>${data.forecast.forecastday[i].hour[14].chance_of_rain} %</h5>
+<h5 class="text-danger"><span class="text-info">Snijeg:</span> ${data.forecast.forecastday[i].hour[14].chance_of_snow} %</h5>
+</div>
+
+<div class="col-2 shadow-lg p-3 mb-5 bg-light border border-5 border-info  card">
+<label class=" form-control bg-warning fw-bold text-center">19:00</label>
+<img src="${data.forecast.forecastday[i].hour[18].condition.icon}" alt="">
+<h5 class="text-danger"><span class="text-info">Prognoza:</span> ${data.forecast.forecastday[i].hour[18].condition.text}</h5>
+<h5 class="text-danger"><span class="text-info">Temperat.:</span> ${data.forecast.forecastday[i].hour[18].temp_c} °C</h5>
+<h5 class="text-danger"><span class="text-info">Kiša: </span>${data.forecast.forecastday[i].hour[18].chance_of_rain} %</h5>
+<h5 class="text-danger"><span class="text-info">Snijeg:</span> ${data.forecast.forecastday[i].hour[18].chance_of_snow} %</h5>
+</div>
+
+<div class="col-2 shadow p-3 mb-5 bg-body border border-5 border-info  card">
+<label class=" form-control bg-warning fw-bold text-center">23:00</label>
+<img src="${data.forecast.forecastday[i].hour[22].condition.icon}" alt="">
+<h5 class="text-danger"><span class="text-info">Prognoza:</span> ${data.forecast.forecastday[i].hour[22].condition.text}</h5>
+<h5 class="text-danger"><span class="text-info">Temperat.:</span> ${data.forecast.forecastday[i].hour[22].temp_c} °C</h5>
+<h5 class="text-danger"><span class="text-info">Kiša: </span>${data.forecast.forecastday[i].hour[22].chance_of_rain} %</h5>
+<h5 class="text-danger"><span class="text-info">Snijeg:</span> ${data.forecast.forecastday[i].hour[22].chance_of_snow} %</h5>
+</div>
+<div class="col-1">
+
+</div>
+</div>
 <br>
     `;
-      prognozaContainer.insertAdjacentHTML('beforeend', el);
-    
+    prognozaContainer.insertAdjacentHTML('beforeend', el);
   });
 }
-//Auto populate option number of days 
+//Auto populate option number of days
 const a = 'Nema Opisa za navedeni grad';
 
 function optionDani() {
@@ -168,19 +249,17 @@ function optionDani() {
 
 optionDani();
 
-
-//Search sugestions 
+//Search sugestions
 
 let suggestions = [];
 async function fetchData() {
- 
- await fetch(`/world-cities.json`)
+  await fetch(`/world-cities.json`)
     .then(res => res.json())
     .then(data => {
       suggestions.push(...data);
     });
 }
-fetchData()
+fetchData();
 // Retrieve the input and results elements
 const input = document.getElementById('autocomplete-input');
 const resultsContainer = document.getElementById('autocomplete-results');
@@ -208,24 +287,22 @@ inpGrad.addEventListener('input', function () {
   });
 });
 
-
-
 //Current position
 
-  
 const options = {
   enableHighAccuracy: true,
   timeout: 5000,
   maximumAge: 0,
 };
 
+
 function success(pos) {
   const crd = pos.coords;
 
-  
-  const cordsa=[crd.latitude,crd.longitude]
-  
-  currentWeather([cordsa[0],cordsa[1]])
+  const cordsa = [crd.latitude, crd.longitude];
+
+  currentWeather([cordsa[0], cordsa[1]]);
+  forecastWeather([cordsa[0], cordsa[1]], 3);
 }
 
 function error(err) {
@@ -235,48 +312,7 @@ function error(err) {
 navigator.geolocation.getCurrentPosition(success, error, options);
 
 
+//forecastWeather('Banja Luka',2)
 
-//Autosearch 
-
-
-// // Get references to the necessary elements
-// const searchInput = document.getElementById('grad');
-// const searchButton = document.getElementById('prikazi');
-// const searchResults = document.getElementById('autocomplete-results');
-
-// // Register an event listener for the search button
-// searchInput.addEventListener('input', performSearch);
-
-// // Function to handle the search
-// function performSearch() {
-//   const location = inpGrad.value;
-
-//   // Clear previous search results
-//   searchResults.innerHTML = '';
-
-//   // Make a request to the WeatherAPI.com auto search endpoint
-//   fetch(`https://api.weatherapi.com/v1/search.json?key=293d337328c946e5a86153625231306&q=${location}`)
-//     .then(response => response.json())
-//     .then(data => {
-//       // Process the response data
-//       if (data.length > 0) {
-//         // Display search results
-//         data.forEach(result => {
-//           const resultItem = document.createElement('div');
-//           resultItem.textContent = result.name;
-//           searchResults.appendChild(resultItem);
-//         });
-//       } else {
-//         // No results found
-//         const noResults = document.createElement('div');
-//         noResults.textContent = 'No results found.';
-//         searchResults.appendChild(noResults);
-//       }
-//     })
-//     .catch(error => {
-//       // Handle error
-//       console.error('Error:', error);
-//     });
-// }
 
 

@@ -16,9 +16,11 @@ background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 
     color: white;
 }
 
-.td-bold{
-    font-weight: bolde;
-    font-size: large;
+td{
+    font-weight: bold;
+   
+    color: rgb(17, 146, 24);
+  font-size: 1.3em
 }
 
 body{
@@ -29,7 +31,7 @@ body{
 
 /* background-image: linear-gradient(to right bottom, #07e2e6, #00e8d0, #00eca9, #00ed71, #3deb12); */
 
-.suggestions {
+/* .suggestions {
    
     
     li {
@@ -54,11 +56,11 @@ body{
       }
     }
   
-  
+}
   .highlight {
     background-color: #fbc93d;
-  }
-}
+  } */
+
 
 
 .autocomplete {
@@ -85,4 +87,9 @@ body{
 
 .autocomplete-item:hover {
   background-color: #e9e9e9;
+}
+
+.nasl{
+  text-shadow: -1px 7px 2px gray
+
 }
